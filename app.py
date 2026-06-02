@@ -30,7 +30,7 @@ html, body, [class*="css"] {
 
 /* ── Hide default streamlit chrome ── */
 #MainMenu, footer, header { visibility: hidden; }
-.block-container { padding: 2rem 3rem 4rem; max-width: 1200px; }
+.block-container { padding: 2rem 3rem 4rem; max-width: 1400px; }
 
 /* ── Hero header ── */
 .hero {
@@ -50,7 +50,7 @@ html, body, [class*="css"] {
 }
 .hero h1 {
     font-family: 'Syne', sans-serif;
-    font-size: clamp(2.8rem, 6vw, 5rem);
+     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 800;
     line-height: 1.0;
     letter-spacing: -0.03em;
@@ -61,12 +61,16 @@ html, body, [class*="css"] {
     color: #ff8c32;
 }
 .hero-sub {
-    font-size: 1.05rem;
-    font-weight: 300;
-    color: #a09890;
-    max-width: 520px;
+    text-align: center;
+    max-width: 1200px;
     margin: 0 auto;
-    line-height: 1.65;
+
+    color: rgba(255,255,255,0.75);
+
+    font-size: 1.05rem;
+    line-height: 1.8;
+
+    margin-top: 1rem;
 }
 
 /* ── Divider ── */
@@ -79,7 +83,7 @@ html, body, [class*="css"] {
 /* ── Input card ── */
 .input-card {
     background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,140,50,0.15);
+    border: 1px solid rgba(255,255,255,0.08);
     border-radius: 16px;
     padding: 2rem 2.5rem;
     margin-bottom: 2rem;
@@ -111,44 +115,86 @@ html, body, [class*="css"] {
 }
 
 /* ── Button ── */
+/* ───────── Button ───────── */
+
 .stButton > button {
-    background: linear-gradient(135deg, #ff8c32 0%, #ff5a1a 100%) !important;
+
+    background: linear-gradient(
+        135deg,
+        #ff8c32 0%,
+        #ff5a1a 100%
+    ) !important;
+
     color: #0a0a0f !important;
+
     font-family: 'Syne', sans-serif !important;
+
     font-weight: 700 !important;
+
     font-size: 0.95rem !important;
+
     letter-spacing: 0.04em !important;
+
     border: none !important;
-    border-radius: 10px !important;
-    padding: 0.7rem 2.2rem !important;
+
+    border-radius: 14px !important;
+
+    padding: 0.85rem 2.2rem !important;
+
+    min-height: 54px !important;
+
+    min-width: 240px !important;
+
     cursor: pointer !important;
-    transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s !important;
-    box-shadow: 0 4px 20px rgba(255,140,50,0.3) !important;
-    width: 100%;
-}
-.stButton > button:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 8px 28px rgba(255,140,50,0.4) !important;
-    opacity: 0.95 !important;
-}
-.stButton > button:active {
-    transform: translateY(0) !important;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease !important;
+
+    box-shadow:
+        0 6px 24px rgba(255,140,50,.25),
+        0 2px 8px rgba(255,140,50,.15) !important;
 }
 
+.stButton > button:hover {
+
+    transform: translateY(-3px) !important;
+
+    box-shadow:
+        0 10px 32px rgba(255,140,50,.35),
+        0 4px 12px rgba(255,140,50,.20) !important;
+
+    opacity: .98 !important;
+}
+
+.stButton > button:active {
+
+    transform: translateY(0) scale(.98) !important;
+}
+
+.stButton > button:focus {
+
+    outline: none !important;
+
+    box-shadow:
+        0 0 0 3px rgba(255,140,50,.25),
+        0 10px 32px rgba(255,140,50,.35) !important;
+}
 /* ── Pipeline step cards ── */
 .step-card {
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.07);
     border-radius: 14px;
-    padding: 1.5rem 1.8rem;
-    margin-bottom: 1.2rem;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.6rem;
     position: relative;
     overflow: hidden;
     transition: border-color 0.3s;
 }
 .step-card.active {
-    border-color: rgba(255,140,50,0.4);
-    background: rgba(255,140,50,0.04);
+    border-color:f5f5f5;
+    background: f5f5f5;
 }
 .step-card.done {
     border-color: rgba(80,200,120,0.3);
@@ -333,18 +379,26 @@ st.markdown("""
 
 # ── Layout: input left, pipeline right ───────────────────────────────────────
 col_input, col_spacer, col_pipeline = st.columns([5, 0.5, 4])
-
 with col_input:
-    st.markdown('<div class="input-card">', unsafe_allow_html=True)
+
+
     topic = st.text_input(
         "Research Topic",
-        placeholder="e.g. Quantum computing breakthroughs in 2025",
+        placeholder="🔍 Quantum computing breakthroughs in 2025",
         key="topic_input",
-        label_visibility="visible",
     )
-    run_btn = st.button("⚡  Run Research Pipeline", use_container_width=True)
-    st.markdown('</div>', unsafe_allow_html=True)
 
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    btn_col1, btn_col2, btn_col3 = st.columns([1, 2, 1])
+
+    with btn_col2:
+        run_btn = st.button(
+            "Generate Report",
+            use_container_width=True,
+        )
+
+    st.markdown('</div>', unsafe_allow_html=True)
     # Example chips
     st.markdown("""
     <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.5rem;">
